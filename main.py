@@ -1,8 +1,10 @@
-# main.py
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 from google.cloud import bigquery
+from flask import Flask, jsonify
+
+# Import your existing agents
 from agents.data_collector_offline import DataCollectorAgent
 from agents.data_preprocessor import DataPreprocessorAgent
 from agents.ml_agent import MLAgent
@@ -14,6 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent
 SERVICE_ACCOUNT_PATH = BASE_DIR / "myfirstproject" / "service-account.json"
 load_dotenv()
 
+# Initialize Flask app
+app = Flask(__name__)
+
 def initialize_bigquery_client():
     """Initialize BigQuery client using service account credentials"""
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(SERVICE_ACCOUNT_PATH)
@@ -22,17 +27,19 @@ def initialize_bigquery_client():
         project=os.getenv("GOOGLE_PROJECT_ID")
     )
 
-def main():
+def run_agents():
+    """Run the existing ML pipeline and return the result context."""
     print("🚀 Starting airplane crash prediction system...")
     print(f"Using service account at: {SERVICE_ACCOUNT_PATH}")
 
+    context = {}
+
     try:
-        # Step 1: Initialize BigQuery Client
+        # Step 1: BigQuery client
         client = initialize_bigquery_client()
 
         # Step 2: Collect Data
         print("\n📥 Running DataCollectorAgent...")
-        context = {}
         collector = DataCollectorAgent()
         context = collector.run(context)
 
@@ -56,13 +63,24 @@ def main():
         reporter = ReportAgent()
         context = reporter.run(context)
 
-        # ✅ Success
         print("\n✅ All agents completed successfully!")
-        print(f"📄 Report Path: {context.get('report_path')}")
-        print(f"📊 Chart Path: {context.get('visual_path')}")
+        return context
 
     except Exception as e:
         print(f"\n❌ Error: {str(e)}")
+        return {"error": str(e)}
 
+# Flask routes
+@app.route("/", methods=["GET"])
+def index():
+    return "Hello, Cloud Run! ✅ The service is up."
+
+@app.route("/run_model", methods=["GET"])
+def run_model():
+    context = run_agents()
+    return jsonify(context)
+
+# Entrypoint for Cloud Run
 if __name__ == "__main__":
-    main()
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
