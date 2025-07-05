@@ -1,6 +1,6 @@
+# ✅ REQUIRED: Logging option to fix service account error
 options:
-  logging: CLOUD_LOGGING_ONLY  # 👈 This satisfies the logging requirement when using a custom service account
-  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET  # 👈 This avoids the 'logs_bucket' conflict
+  logging: CLOUD_LOGGING_ONLY  # or use NONE if you prefer
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
