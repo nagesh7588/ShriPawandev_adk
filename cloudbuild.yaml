@@ -1,9 +1,5 @@
-options:
-  logging: CLOUD_LOGGING_ONLY
-
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service', '.']
-
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/shri-pawandev-adk/my-service', '.']
 images:
-  - 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service'
+- 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/shri-pawandev-adk/my-service'
