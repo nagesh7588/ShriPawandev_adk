@@ -1,4 +1,6 @@
-logsBucket: gs://reliable-cairn-438504-g7_cloudbuild
+options:
+  logging: CLOUD_LOGGING_ONLY  # 👈 This satisfies the logging requirement when using a custom service account
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET  # 👈 This avoids the 'logs_bucket' conflict
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
