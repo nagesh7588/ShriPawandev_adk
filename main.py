@@ -78,13 +78,22 @@ def index():
 @app.route("/run_model", methods=["GET"])
 def run_model():
     context = run_agents()
-    
+
+    # If pipeline failed, return proper error response
+    if not isinstance(context, dict) or "error" in context:
+        return jsonify({
+            "status": "error",
+            "message": context.get("error", "Unknown error occurred")
+        }), 500
+
+    # Return only JSON-serializable values
     return jsonify({
         "status": "success",
-        "report_path": context.get("report_path"),
-        "visual_path": context.get("visual_path"),
+        "report_path": context.get("report_path", "Not generated"),
+        "visual_path": context.get("visual_path", "Not generated"),
         "message": "Model pipeline completed successfully"
     })
+
 
 
 
