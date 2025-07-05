@@ -2,7 +2,7 @@
 FROM python:3.10-alpine as builder
 
 WORKDIR /app
-COPY requirements-prod.txt .
+COPY requirements-dev.txt .
 
 # Install build dependencies
 RUN apk add --no-cache \
