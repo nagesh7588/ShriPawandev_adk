@@ -1,6 +1,7 @@
-<<<<<<< HEAD
 options:
-  logging: CLOUD_LOGGING_ONLY  # ✅ This satisfies the required logging condition
+  logging: CLOUD_LOGGING_ONLY  # Satisfies service account logging requirement
+
+logsBucket: gs://reliable-cairn-438504-g7_cloudbuild
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
@@ -8,9 +9,3 @@ steps:
 
 images:
   - 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service'
-=======
-steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service', '.']
-images: ['asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service']
->>>>>>> 007986bf5bb5426d36aa2db0aded531d129ccc0f

@@ -78,7 +78,6 @@ def index():
 @app.route("/run_model", methods=["GET"])
 def run_model():
     context = run_agents()
-<<<<<<< HEAD
 
     # If pipeline failed, return proper error response
     if not isinstance(context, dict) or "error" in context:
@@ -94,12 +93,6 @@ def run_model():
         "visual_path": context.get("visual_path", "Not generated"),
         "message": "Model pipeline completed successfully"
     })
-
-
-
-=======
-    return jsonify(context)
->>>>>>> 007986bf5bb5426d36aa2db0aded531d129ccc0f
 
 # Entrypoint for Cloud Run
 if __name__ == "__main__":
