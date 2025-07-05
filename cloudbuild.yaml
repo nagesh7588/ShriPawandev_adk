@@ -1,23 +1,9 @@
-logsBucket: gs://reliable-cairn-438504-g7_cloudbuild  # ✅ Replace with your bucket name
-
 options:
-  logging: CLOUD_LOGGING_ONLY  # ✅ Still required for minimal logging
+  logging: CLOUD_LOGGING_ONLY  # ✅ This satisfies the required logging condition
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service', '.']
 
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service']
-
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args:
-      - run
-      - deploy
-      - my-service
-      - --image=asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service
-      - --region=europe-west1
-      - --platform=managed
-      - --allow-unauthenticated
-      - --service-account=shripawandev@reliable-cairn-438504-g7.iam.gserviceaccount.com
+images:
+  - 'asia-south2-docker.pkg.dev/reliable-cairn-438504-g7/quickstart-docker-repo/my-service'
