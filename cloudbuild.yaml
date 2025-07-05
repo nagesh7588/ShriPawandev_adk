@@ -1,5 +1,4 @@
-options:
-  logging: CLOUD_LOGGING_ONLY
+logsBucket: gs://reliable-cairn-438504-g7_cloudbuild
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
