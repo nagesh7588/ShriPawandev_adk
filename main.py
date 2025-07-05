@@ -78,7 +78,15 @@ def index():
 @app.route("/run_model", methods=["GET"])
 def run_model():
     context = run_agents()
-    return jsonify(context)
+    
+    # Safely return only what's JSON-serializable
+    return jsonify({
+        "status": "success",
+        "report_path": str(context.get("report_path", "Not available")),
+        "visual_path": str(context.get("visual_path", "Not available")),
+        "message": "Model pipeline completed successfully"
+    })
+
 
 # Entrypoint for Cloud Run
 if __name__ == "__main__":
