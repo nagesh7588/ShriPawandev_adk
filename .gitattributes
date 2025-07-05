@@ -1,0 +1,4 @@
+data/avall.mdb filter=lfs diff=lfs merge=lfs -text
+data/data/csv_exports/narratives.csv filter=lfs diff=lfs merge=lfs -text
+data/data/csv_exports/merged_output.csv filter=lfs diff=lfs merge=lfs -text
+myfirstproject/service-account.json filter=lfs diff=lfs merge=lfs -text
