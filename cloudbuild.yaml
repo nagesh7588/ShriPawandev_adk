@@ -1,7 +1,5 @@
 options:
-  logging: CLOUD_LOGGING_ONLY  # Satisfies service account logging requirement
-
-logsBucket: gs://reliable-cairn-438504-g7_cloudbuild
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
